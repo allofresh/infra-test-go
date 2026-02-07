@@ -5,20 +5,20 @@ pipeline {
             apiVersion: v1
             kind: Pod
             spec:
-            nodeSelector:
+              nodeSelector:
                 cloud.google.com/gke-spot: "true"
-            tolerations:
-            - key: "purpose"
+              tolerations:
+              - key: "purpose"
                 operator: "Equal"
                 value: "gitlab-runner"
                 effect: "NoSchedule"
-            containers:
-            - name: golang
+              containers:
+              - name: golang
                 image: golang:1.22
                 command: ['sleep']
                 args: ['infinity']
                 resources:
-                requests:
+                  requests:
                     cpu: "1"
                     memory: "1Gi"
         """
