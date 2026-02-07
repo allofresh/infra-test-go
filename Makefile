@@ -11,10 +11,23 @@ COVER_FILE  := $(COVER_DIR)/coverage.out
 COVER_HTML  := $(COVER_DIR)/coverage.html
 MIN_COVERAGE := 80
 
-.PHONY: all build vet unit-test race-test coverage test clean docker-build docker-run help
+.PHONY: all compile build vet unit-test race-test coverage test clean docker-build docker-run help
 
 ## all: Run all test components in pipeline order
 all: vet unit-test race-test coverage
+
+OUTPUT_DIR  := deploy/_output/rest
+BINARY_NAME := prod
+
+## compile: Download dependencies and build binary
+compile:
+	@echo "==> Downloading dependencies..."
+	go mod download
+	@echo "==> Compiling $(APP_NAME)..."
+	@mkdir -p $(OUTPUT_DIR)
+	CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -ldflags="-s -w" -o $(OUTPUT_DIR)/$(BINARY_NAME) $(CMD_PATH)
+	@echo "==> Binary: $(OUTPUT_DIR)/$(BINARY_NAME)"
+	@echo "==> Compile passed"
 
 ## build: Compile the application binary
 build:
