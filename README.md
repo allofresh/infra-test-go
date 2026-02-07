@@ -86,10 +86,10 @@ curl -X DELETE http://localhost:8080/products/1
 
 ## Running Unit Tests
 
-The test pipeline has 4 components matching `run_unit_test_components`:
+The test pipeline has 5 components matching `run_unit_test_components`:
 
 ```json
-["vet", "unit-test", "race-test", "coverage"]
+["compile", "vet", "unit-test", "race-test", "coverage"]
 ```
 
 ### Run All Tests (Recommended)
@@ -98,21 +98,24 @@ The test pipeline has 4 components matching `run_unit_test_components`:
 make all
 ```
 
-This executes all 4 components in order: `vet` → `unit-test` → `race-test` → `coverage`.
+This executes all test components in order: `vet` → `unit-test` → `race-test` → `coverage`.
 
 ### Run Individual Components
 
 ```bash
-# 1. vet — static analysis
+# 1. compile — download dependencies and verify build
+make compile
+
+# 2. vet — static analysis
 make vet
 
-# 2. unit-test — run all unit tests
+# 3. unit-test — run all unit tests
 make unit-test
 
-# 3. race-test — run tests with race detector
+# 4. race-test — run tests with race detector
 make race-test
 
-# 4. coverage — run tests with coverage report (minimum 80%)
+# 5. coverage — run tests with coverage report (minimum 80%)
 make coverage
 ```
 
