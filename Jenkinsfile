@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Compile') {
+            steps {
+                sh 'make compile'
+            }
+        }
+
         stage('Vet') {
             steps {
                 sh 'make vet'
