@@ -25,7 +25,7 @@ compile:
 	go mod download
 	@echo "==> Compiling $(APP_NAME)..."
 	@mkdir -p $(OUTPUT_DIR)
-	CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -ldflags="-s -w" -o $(OUTPUT_DIR)/$(BINARY_NAME) $(CMD_PATH)
+	CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o $(OUTPUT_DIR)/$(BINARY_NAME) $(CMD_PATH)
 	@echo "==> Binary: $(OUTPUT_DIR)/$(BINARY_NAME)"
 	@echo "==> Compile passed"
 
@@ -77,7 +77,7 @@ test: all
 ## clean: Remove build artifacts and coverage reports
 clean:
 	@echo "==> Cleaning..."
-	rm -rf bin/ $(COVER_DIR)
+	rm -rf bin/ $(COVER_DIR) deploy/
 	@echo "==> Clean complete"
 
 ## docker-build: Build the Docker image
