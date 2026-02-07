@@ -1,7 +1,25 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            yaml '''
+            spec:
+              containers:
+              - name: golang
+                image: golang:1.22
+                command: ['sleep']
+                args: ['infinity']
+            '''
+            defaultContainer 'golang'
+        }
+    }
 
     stages {
+        stage('Compile') {
+            steps {
+                sh 'make compile'
+            }
+        }
+
         stage('Vet') {
             steps {
                 sh 'make vet'
